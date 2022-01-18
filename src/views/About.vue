@@ -78,6 +78,7 @@ import {
   NGridItem,
   NSpin,
 } from "naive-ui";
+import VideoPlayer from '../components/common/VideoPlayer.vue'
 import { getChannel, getChannel1 } from "../api/list";
 import setup from "naive-ui/lib/radio/src/use-radio";
 let theme = ref();
