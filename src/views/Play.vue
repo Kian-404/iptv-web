@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <vue-player :options="videoOptions" />
+  <div class="play">
+    <VuePlayer/>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ let videoOptions = {
   controls: true,
   sources: [
     {
-      src: "http://223.110.245.167/ott.js.chinamobile.com/PLTV/3/224/3221226942/index.m3u8",
+      src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8",
       type: "application/x-mpegURL",
        withCredentials: false,
     },
@@ -20,4 +20,7 @@ let videoOptions = {
 </script>
 
 <style scoped>
+.play{
+  height: 100%;
+}
 </style>

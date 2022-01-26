@@ -1,35 +1,38 @@
 <template>
-  <div>
-    <video ref="videoPlayer" class="video-js"></video>
+  <div class="play">
+    <video autoplay controls width="100%" height="500" id="myVideo"></video>
   </div>
-</template>v
+</template>
 
 <script setup lang="ts">
-import videojs, {VideoJsPlayer, VideoJsPlayerOptions} from "video.js";
-import { onMounted, onUnmounted, ref} from "vue";
-const props = defineProps({
-  options: {
-    type: Object,
-    default: ''
+import { nextTick, onMounted } from "vue";
+import flvjs from "flv.js";
+function videoPlayer() {
+  if (flvjs.isSupported()) {
+    var videoElement: any = document.getElementById("myVideo");
+    var flvPlayer = flvjs.createPlayer({
+      type: "flv",
+      isLive: true,
+      cors: true,
+      url: "http://39.134.115.163:8080/PLTV/88888910/224/3221225618/index.m3u8", //你的url地址
+    });
+    flvPlayer.attachMediaElement(videoElement);
+    flvPlayer.load();
+    flvPlayer.play();
   }
-})
-let videoPlayer = ref('videoPlayer')
-let player:VideoJsPlayer;
+}
 onMounted(() => {
-  player = videojs(
-    videoPlayer.value,
-    props.options,
-    function onPlayerReady() {
-      console.log("onPlayerReady");
-    }
-  );
-});
-onUnmounted(() => {
-  if (player) {
-    player.dispose();
-  }
+  nextTick(() => {
+    videoPlayer();
+  });
 });
 </script>
 
-<style scoped>
+<style scoped lang="less">
+.play{
+  width: 100%;
+  #myVideo{
+    width: 100%;
+  }
+}
 </style>

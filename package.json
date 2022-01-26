@@ -9,9 +9,9 @@
   "dependencies": {
     "axios": "^0.24.0",
     "echarts": "^5.2.2",
+    "flv.js": "^1.6.2",
     "naive-ui": "^2.23.0",
     "vfonts": "^0.1.0",
-    "video.js": "^7.17.0",
     "vue": "^3.2.25",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
