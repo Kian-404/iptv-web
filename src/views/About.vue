@@ -22,35 +22,28 @@
       responsive="screen"
     >
       <n-grid-item v-for="channel in channelList" :key="channel['tvg-id']">
-        <n-card :title="channel.title" hoverable>
+        <n-card :title="channel.title" hoverable @click="playChannel(channel)">
           <div class="light-green">
             <n-image
               width="100"
-              :src="channel['tvg-logo'].length > 0 ? channel['tvg-logo']: 'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg'"
+              preview-disabled
+              :src="
+                channel['tvg-logo'].length > 0
+                  ? channel['tvg-logo']
+                  : 'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg'
+              "
             />
           </div>
         </n-card>
       </n-grid-item>
-      <n-grid-item>
-        <div class="green">2</div>
-      </n-grid-item>
-      <n-grid-item>
-        <div class="light-green">3</div>
-      </n-grid-item>
-      <n-grid-item>
-        <div class="green">4</div>
-      </n-grid-item>
-      <n-grid-item>
-        <div class="light-green">5</div>
-      </n-grid-item>
-      <n-grid-item>
-        <div class="green">6</div>
-      </n-grid-item>
-      <n-grid-item>
-        <div class="light-green">7</div>
-      </n-grid-item>
     </n-grid>
   </n-spin>
+  <n-modal v-model:show="showModal" style="width:50%" preset="dialog" title="Dialog">
+    <template #header>
+      <div>标题</div>
+    </template>
+    <VideoPlayer :resource="resource"/>
+  </n-modal>
 </template>
 
 <script lang="ts" setup>
@@ -77,8 +70,9 @@ import {
   NGrid,
   NGridItem,
   NSpin,
+  NModal,
 } from "naive-ui";
-import VideoPlayer from '../components/common/VideoPlayer.vue'
+import VideoPlayer from "../components/common/VideoPlayer.vue";
 import { getChannel, getChannel1 } from "../api/list";
 import setup from "naive-ui/lib/radio/src/use-radio";
 let theme = ref();
@@ -88,10 +82,12 @@ let channelAll = ref();
 let channelList = ref();
 let description = "数据加载中";
 let show = ref(false);
+let showModal = ref(false);
+let resource = ref()
 
 onMounted(() => {
   show.value = true;
-  getChannel().then((res) => {
+  getChannel().then((res: { data: any; }) => {
     console.log(res);
     show.value = false;
     channelAll.value = res.data;
@@ -105,6 +101,10 @@ function fillterChannel(key: string) {
   );
   show.value = false;
   console.log(channelList.value);
+}
+function playChannel(item:ChannelType) {
+  resource.value = item;
+  showModal.value = true;
 }
 </script>
 <style>
